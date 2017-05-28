@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/msg_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/send_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/msg_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/rcv_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="rcv_data"
+        android:layout_marginBottom="82dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ToggleButton
+        android:id="@+id/control_door"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="ToggleButton"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/round_btn"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

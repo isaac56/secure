@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "89794236730",
+    "firebase_url": "https://security-c7e7e.firebaseio.com",
+    "project_id": "security-c7e7e",
+    "storage_bucket": "security-c7e7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89794236730:android:0d5a4cfc22543822",
+        "android_client_info": {
+          "package_name": "com.example.jum.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89794236730-uppvort92goqegdfiv07qkskk1ms3on0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AAAAFOgnUTo:APA91bHV-_fQR8fvmNRQB1zluu1otbR0M8O6zOaA9V1XjfIZCrqlVQFkj60buVBegiKhV5F2wdFsKyveOY8OsGhi8h_nAMeyuyD_dZJ6vOwOAUxY2A6w3Inusua4fVt6Q241zRMoIX6t"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
