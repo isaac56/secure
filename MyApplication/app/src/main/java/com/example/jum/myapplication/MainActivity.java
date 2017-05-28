@@ -12,7 +12,7 @@ package com.example.jum.myapplication;
 
 
 public class MainActivity extends AppCompatActivity {
-
+	//abcdedf
     String ipadress;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
