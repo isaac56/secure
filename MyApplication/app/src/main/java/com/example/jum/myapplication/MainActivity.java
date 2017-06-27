@@ -13,8 +13,6 @@ package com.example.jum.myapplication;
 
 public class MainActivity extends AppCompatActivity {
 
-	//abcdedf
-//asagsbogdsab
     String ipadress;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

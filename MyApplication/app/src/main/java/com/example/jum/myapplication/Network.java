@@ -2,6 +2,7 @@ package com.example.jum.myapplication;
 
         import android.app.Activity;
         import android.content.Intent;
+        import android.graphics.Color;
         import android.os.AsyncTask;
         import android.os.Bundle;
         import android.util.Log;
@@ -36,8 +37,8 @@ public class Network extends Activity {
     String rcv_msg;
     public String url_ip;
     TextView rcv_data;
-    ToggleButton door_button;
     boolean door_opened=true;
+    ToggleButton door_button;
     String StatusDoorOpen = "open";
     String StatusDoorClose = "close";
     char CommandOpenDoor = 'a';
@@ -54,11 +55,12 @@ public class Network extends Activity {
         Intent intent = getIntent();
         url_ip = "http://" + intent.getStringExtra("ip");
         //처음에 시작할때 상태를 한번 받는다.
+        /*
         try {
             new SendPost().execute(0);
         }catch(Exception e){
             Toast.makeText(getApplicationContext(),"오류가 발생했습니다 "+ e,Toast.LENGTH_SHORT);
-        }
+        }*/
 
         String Token= FirebaseInstanceId.getInstance().getToken();
         Log.d("neetwork",Token);
@@ -77,11 +79,11 @@ public class Network extends Activity {
                 if(door_opened == false){
                     //문 열기
                     new SendPost().execute(2);
-                    Toast.makeText(getApplicationContext(), "문 열기를 시도했습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "문 열기를 시도했습니다.", Toast.LENGTH_SHORT).show();
                 }else{
                     //문 닫기
                     new SendPost().execute(3);
-                    Toast.makeText(getApplicationContext(), "문 닫기를 시도했습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "문 닫기를 시도했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,13 +185,12 @@ public class Network extends Activity {
             }
             rcv_msg = builder.toString();
             Log.d("network", "받기 완료");
-            SetDoor();
         }catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }catch (IOException e) {
-            Toast.makeText(getApplicationContext(), e.toString() , Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), e.toString() , Toast.LENGTH_LONG).show();
         }
 
     }
@@ -286,12 +287,33 @@ public class Network extends Activity {
                 ControlDoor(CommandOpenDoor);
             if(params[0] == 3)
                 ControlDoor(CommandCloseDoor);
+            publishProgress();
             return "done";
         }
-
         protected void onPostExecute(String result) {
             // 모두 작업을 마치고 실행할 일 (메소드 등등)
             rcv_data.setText(rcv_msg);
+            Log.d("명령어",rcv_msg);
+            if(rcv_msg.contains(StatusDoorClose)){
+                door_opened=false;
+                Toast.makeText(getApplicationContext(), "문이 잠겼습니다.", Toast.LENGTH_LONG).show();
+                door_button.setBackgroundColor(Color.RED);
+                rcv_msg = null;
+            }else if(rcv_msg.contains(StatusDoorOpen)){
+                door_opened=true;
+                Toast.makeText(getApplicationContext(), "문이 열렸습니다.", Toast.LENGTH_LONG).show();
+                door_button.setBackgroundColor(Color.GREEN);
+                rcv_msg = null;
+            }else{
+                if(door_opened == true){
+                    Toast.makeText(getApplicationContext(), "문이 잠겼습니다.", Toast.LENGTH_LONG).show();
+                    Log.d("door","여기들어옴");
+                }
+                else if(door_opened == false){
+                    Toast.makeText(getApplicationContext(), "문이 열렸습니다.", Toast.LENGTH_LONG).show();
+                    Log.d("door","여기로 들어왓음");
+                }
+            }
         }
     }
 }
