@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listen =  new View.OnClickListener(){
             public void onClick(View v) {
                 Log.d("network", "It's in try");
-                Intent Network_Intent = new Intent(MainActivity.this,Network.class);
-                Intent FcmIntent = new Intent(MainActivity.this,MyFirebaseInstanceIDService.class);
-                FcmIntent.putExtra("ip",ipadress);
+                Intent Password_Intent = new Intent(MainActivity.this,Password.class);
+                //Intent FcmIntent = new Intent(MainActivity.this,MyFirebaseInstanceIDService.class);
+                //FcmIntent.putExtra("ip",ipadress);
                 ipadress = ip_text.getText().toString();
-                Network_Intent.putExtra("ip",ipadress);
-                startActivity(Network_Intent);
+                Password_Intent.putExtra("ip",ipadress);
+                startActivity(Password_Intent);
             }
         };
         NextButton.setOnClickListener(listen);

@@ -53,7 +53,7 @@ public class Network extends Activity {
         rcv_data = (TextView) findViewById(R.id.rcv_data);
         door_button = (ToggleButton) findViewById(R.id.control_door);
         Intent intent = getIntent();
-        url_ip = "http://" + intent.getStringExtra("ip");
+        url_ip = intent.getStringExtra("ip");
         //처음에 시작할때 상태를 한번 받는다.
         /*
         try {

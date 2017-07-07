@@ -5,7 +5,55 @@ var express = require('express')
 var app = express();
 var port = 3000;
 
+var db = require('./mongodb');
 
+app.post('/checkPw', function(req, res) {
+     var chunk = "";
+     req.on('data', function(data){
+        console.log(data);
+        chunk = JSON.parse(data);
+    });
+    req.on('end',function(){
+        console.log(String(chunk.pw));
+
+        db.checkPw(String(chunk.pw), function(err, length) {
+        if(err) throw err;
+        console.log(length);
+        res.write(String(length));
+        res.end();
+    });
+    });
+
+
+});
+
+app.post('/pwExist', function(req, res) {
+    db.pwExist(function(err, c) {
+        if(err) throw err;
+        console.log(c);
+        res.write(String(c));
+        res.end();
+    });
+});
+
+app.post('/makePw', function(req, res) {
+     var chunk = "";
+     var pw = "dasdf";
+     req.on('data', function(data){
+        console.log(data);
+        chunk = JSON.parse(data);
+    });
+    req.on('end',function(){
+        console.log("pw : "+chunk.pw);
+        db.savePw("host",String(chunk.pw));
+    });
+
+    //pw = String(chunk.pw);
+    
+    
+    res.write("password was made");
+    res.end();
+});
 
 app.get('/',function(req,res){
     console.log("get으로 들어왔습니다.");
@@ -13,13 +61,14 @@ app.get('/',function(req,res){
 
 
 app.post('/',function(req,res){
-    var chunk = "";
+    var chunk = ""; // req.body;
     //데이터를 가져옵니다.
     console.log("요청들어옴");
     req.on('data', function(data){
         //데이터를 JSON으로 파싱합니다.
         console.log(data);
         chunk = JSON.parse(data);
+        console.log(chunk);
     });
     req.on('end',function(){
         //파싱된 데이터를 확인합니다.
@@ -27,7 +76,8 @@ app.post('/',function(req,res){
     });
     // 아래의 OK라는 내용이 안드로이드의 ReadBuffer를 통해
     // result String으로 바뀝니다.
-    //res.write("OK");
+    res.write(chunk);
+    res.end();
     
 });
 
@@ -43,7 +93,7 @@ app.post('/door',function(req,res){
     });
     res.write("doorisokay");
     res.end();
-    serial.sendmsg("1");
+    //serial.sendmsg("1");
 });
 
 
@@ -85,8 +135,8 @@ app.post('/aduino',function(req,res){
 //var mongodb = require('./mongodb');
 //mongodb.saveinmongo();
 //mongodb.findinmongo();
-var serial = require('./serial');
-serial.sendmsg("hi");
+//var serial = require('./serial');
+//serial.sendmsg("hi");
 
 
 
