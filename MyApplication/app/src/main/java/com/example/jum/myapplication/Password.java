@@ -64,9 +64,6 @@ public class Password extends Activity {
                     new SendPost().execute(checkPw);
                 } else {
                     new SendPost().execute(makePw);
-                    Intent Password_Intent = new Intent(Password.this,Network.class);
-                    Password_Intent.putExtra("ip",url_ip);
-                    startActivity(Password_Intent);
                 }
             }
         });
@@ -157,6 +154,15 @@ public class Password extends Activity {
             }
             rcv_msg = builder.toString();
             Log.d("network", "받기 완료");
+            UIHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Intent Password_Intent = new Intent(Password.this,Network.class);
+                    Password_Intent.putExtra("ip",url_ip);
+                    startActivity(Password_Intent);
+                    finish();
+                }
+            });
         }catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -213,6 +219,7 @@ public class Password extends Activity {
                         Intent Password_Intent = new Intent(Password.this,Network.class);
                         Password_Intent.putExtra("ip",url_ip);
                         startActivity(Password_Intent);
+                        finish();
                     }
                 }
             });
