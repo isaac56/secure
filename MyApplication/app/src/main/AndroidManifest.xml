@@ -22,13 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".Ip"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
 
@@ -53,7 +48,17 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Password"></activity>
+        <activity
+            android:name=".Password"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".Start"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

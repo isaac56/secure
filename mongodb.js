@@ -1,3 +1,4 @@
+var app = require('./app');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/data');
 var db = mongoose.connection;
@@ -5,6 +6,11 @@ db.once('open', function callback () {
 	// add your code here when opening
   	console.log("open");
 });
+
+var me = require('./mongodb');
+exports.test = "";
+exports.switch = 0;
+
 
 var md5 = require('md5');
 
@@ -60,12 +66,18 @@ exports.savePw = function(name, pw) {
 }
 
 exports.checkPw = function(pw, callback) {
+    console.log(app.asd);
+    app.asd = app.asd + 1;
     User.find({
         password: md5(pw)
     }, function(err, users) {
         if (err) return console.error(err);        
+        me.test = String(users.length);
+        console.log("tt");
+        me.switch = 1;
         callback(null, users.length);
     });
+
 }
 
 exports.pwExist = function(callback) {

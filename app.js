@@ -1,11 +1,19 @@
+
 var express = require('express')
     ,http = require('http');
 
 //객체생성.
+
 var app = express();
 var port = 3000;
+var date_utils = require('date-utils');
+var date = new Date();
+var time = date.toFormat('YYYY-MM-DD HH24:MI:SS');
+var async = require('async');
 
 var db = require('./mongodb');
+var me = require('./app');
+exports.asd = 3;
 
 app.post('/checkPw', function(req, res) {
      var chunk = "";
@@ -21,10 +29,12 @@ app.post('/checkPw', function(req, res) {
         console.log(length);
         res.write(String(length));
         res.end();
-    });
-    });
+        });
+        setTimeout(function (){
+            console.log("isaac:" + db.test);                
+        },500);
 
-
+    });
 });
 
 app.post('/pwExist', function(req, res) {
@@ -38,7 +48,6 @@ app.post('/pwExist', function(req, res) {
 
 app.post('/makePw', function(req, res) {
      var chunk = "";
-     var pw = "dasdf";
      req.on('data', function(data){
         console.log(data);
         chunk = JSON.parse(data);
@@ -48,8 +57,6 @@ app.post('/makePw', function(req, res) {
         db.savePw("host",String(chunk.pw));
     });
 
-    //pw = String(chunk.pw);
-    
     
     res.write("password was made");
     res.end();
@@ -91,7 +98,9 @@ app.post('/door',function(req,res){
     req.on('end',function(){
         console.log("name : "+chunk.name);
     });
-    res.write("doorisokay");
+    while(serial.switch == 0){}
+    res.write(serial.string);
+    serial.switch = 0;
     res.end();
     //serial.sendmsg("1");
 });
@@ -123,11 +132,6 @@ app.post('/aduino',function(req,res){
 
 
 
-
-/*
-
-*/
-
 //푸시알림을 위한 구글 fcm 통신
 
 //var fcm = require('./fcm');
@@ -142,3 +146,4 @@ app.post('/aduino',function(req,res){
 
 app.listen(port);
 console.log('서버가 운영중입니다.');
+console.log(time);
