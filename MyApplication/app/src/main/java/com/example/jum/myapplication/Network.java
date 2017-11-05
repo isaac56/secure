@@ -44,7 +44,6 @@ public class Network extends Activity {
     char CommandOpenDoor = 'a';
     char CommandCloseDoor = 'a';
 
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.networklayout);
@@ -63,7 +62,7 @@ public class Network extends Activity {
         }*/
 
         String Token= FirebaseInstanceId.getInstance().getToken();
-        Log.d("neetwork",Token);
+        Log.d("network",Token);
 
         View.OnClickListener button_listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -192,7 +191,6 @@ public class Network extends Activity {
         }catch (IOException e) {
             //Toast.makeText(getApplicationContext(), e.toString() , Toast.LENGTH_LONG).show();
         }
-
     }
 
     //서버에 메시지를 보내고 받는다.
@@ -241,7 +239,6 @@ public class Network extends Activity {
         }catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 

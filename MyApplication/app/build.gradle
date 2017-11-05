@@ -19,16 +19,29 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    // required: supports marshmallow devices
+    // optional: support for pre-marshmallow Samsung devices
+    // optional: the RxJava 1 interface
+    // optional: the RxJava 2 interface
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.android.support:design:25.3.1'
+    compile 'com.github.ajalt.reprint:core:3.1.0@aar'
+    compile 'com.github.ajalt.reprint:reprint_spass:3.1.0@aar'
+    compile 'com.github.ajalt.reprint:rxjava:3.1.0@aar'
+    compile 'com.github.ajalt.reprint:rxjava2:3.1.0@aar'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

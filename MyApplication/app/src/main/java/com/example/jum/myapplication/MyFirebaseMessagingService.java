@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.os.Vibrator;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.Map;
 
 /**
  * Created by jum on 2017-05-10.
@@ -35,27 +33,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         //Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //long[] pattern = {500,500,500};
         //vib.vibrate(pattern,1);
-        NotificationSomethings();
+        String link = message.getData().get("link").toString();
+        Log.d("fcm",link);
+        NotificationSomethings(link);
     }
-    public void NotificationSomethings() {
+    public void NotificationSomethings(String link) {
     Resources res = getResources();
 
-    Intent notificationIntent = new Intent(this, Network.class);
-        notificationIntent.putExtra("notificationId", 9999); //전달할 값
-    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-    //알림창에 대한 빌더
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        Intent intent = new Intent(this, Webview_fcm.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", link);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         builder.setContentTitle("알림이 왔습니다")
                 .setContentText(msg)
                 .setTicker("상태바 한줄 메시지")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
-        .setContentIntent(contentIntent)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
-        .setDefaults(Notification.DEFAULT_ALL);
+                .setDefaults(Notification.DEFAULT_ALL);
 
 
 
@@ -63,9 +66,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     builder.setCategory(Notification.CATEGORY_MESSAGE)
             .setPriority(Notification.PRIORITY_HIGH)
             .setVisibility(Notification.VISIBILITY_PUBLIC);
-}
+        }
 
     NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(1234, builder.build());
-}
+
+    }
+
+
 }

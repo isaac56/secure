@@ -4,12 +4,12 @@ package com.example.isaac.mjpg;
         import android.support.v7.app.AppCompatActivity;
         import android.webkit.WebView;
 
-public class MainActivity extends AppCompatActivity {
+public class Camera extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
 
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.setPadding(0, 0, 0, 0);

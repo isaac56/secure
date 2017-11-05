@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="300dip"
+    android:layout_height="200dip">
+
+    <Button
+        android:id="@+id/fingerprintButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/addressButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:text="지문 ON"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="255dp" />
+
+    <EditText
+        android:id="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="192.168.0.4"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="141dp"
+        android:layout_above="@+id/addressButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/addressButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="IP 변경"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="255dp" />
+
+</RelativeLayout>

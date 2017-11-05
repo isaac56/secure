@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="360dp"
+    android:layout_height="616dp"
+    android:background="@drawable/main"
+    tools:context="com.example.jum.myapplication.Start">
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="2">
+
+            <ImageButton
+                android:id="@+id/settingButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/setting"
+                android:layout_below="@+id/test"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="현관문"
+                    android:textAlignment="center"
+                    android:textColor="#FF808681"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/door"
+                    android:layout_width="90dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/close_event"
+                    tools:layout_editor_absoluteX="-473dp"
+                    tools:layout_editor_absoluteY="369dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="창문"
+                    android:textAlignment="center"
+                    android:textColor="#FF808681"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/window"
+                    android:layout_width="90dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/close_event"
+                    tools:layout_editor_absoluteX="200dp"
+                    tools:layout_editor_absoluteY="231dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="창문2"
+                    android:textAlignment="center"
+                    android:textColor="#FF808681"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/window2"
+                    android:layout_width="90dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/close_event"
+                    tools:layout_editor_absoluteX="200dp"
+                    tools:layout_editor_absoluteY="231dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/allopen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="모두열기" />
+
+            <Button
+                android:id="@+id/camera"
+                android:layout_width="118dp"
+                android:layout_height="68dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="30dp"
+                android:background="#FF5C3260"
+                android:text="카메라"
+                android:textColor="#FF808681"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/allclose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="모두닫기" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

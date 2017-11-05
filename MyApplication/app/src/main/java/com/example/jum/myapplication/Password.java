@@ -1,22 +1,20 @@
 package com.example.jum.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Vibrator;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,39 +42,95 @@ public class Password extends Activity {
     int  isTherePw = 0, checkPw = 1, makePw = 2;
 
     Handler UIHandler = null;
+    Vibrator vibe;
+    DBHelper dbHelper;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
+
+    private long pressedTime;
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if(dbHelper.settingExist()) {
+            exitProcess();
+        } else {
+            Intent Ip_intent = new Intent(Password.this, Ip.class);
+            startActivity(Ip_intent);
+            finish();
+        }
+    }
+    private void exitProcess() {
+        if(pressedTime == 0) {
+            Toast.makeText(Password.this, "한번 더 누르면 종료됩니다", Toast.LENGTH_LONG).show();
+            pressedTime = System.currentTimeMillis();
+        }
+        else {
+            int seconds = (int)(System.currentTimeMillis() - pressedTime);
+
+            if( seconds > 2000) {
+                pressedTime = 0;
+            }
+            else {
+                moveTaskToBack(true);
+                finish();
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        }
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_password);
+        dbHelper = new DBHelper(getApplicationContext(), "Setting.db", null, 1);
 
         password = (EditText) findViewById(R.id.password);
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.cancel);
         text = (TextView) findViewById(R.id.text);
-        Intent intent = getIntent();
-        url_ip = "http://" + intent.getStringExtra("ip");
+        url_ip = dbHelper.getAdress();
 
         UIHandler = new Handler();
+        vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
         new SendPost().execute(isTherePw);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                msg = password.getText().toString();
-                if(pwExist) {
-                    new SendPost().execute(checkPw);
-                } else {
-                    new SendPost().execute(makePw);
-                }
+                Intent Password_Intent = new Intent(Password.this,Main.class);
+                startActivity(Password_Intent);
+                finish();
+//                msg = password.getText().toString();
+//                if(pwExist) {
+//                    new SendPost().execute(checkPw);
+//                } else {
+//                    new SendPost().execute(makePw);
+//                }
             }
         });
+    }
+
+    class SendPost extends AsyncTask<Integer, Integer, String> {
+        protected String doInBackground(Integer... params) {
+
+            if(params[0] == isTherePw)
+                pwExist();
+            if(params[0] == makePw)
+                makingPw();
+            if(params[0] == checkPw)
+                checkingPw();
+            publishProgress();
+            return "done";
+        }
     }
 
     private void pwExist(){
         OutputStream os   = null;
         InputStream is   = null;
         try {
-            URL url = new URL(url_ip + "/pwExist");
+            URL url = new URL(url_ip + ":3000/pwExist");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setConnectTimeout(5000);
             http.setReadTimeout(5000);
@@ -123,7 +177,7 @@ public class Password extends Activity {
         OutputStream os   = null;
         InputStream is   = null;
         try {
-            URL url = new URL(url_ip + "/makePw");
+            URL url = new URL(url_ip + ":3000/makePw");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setConnectTimeout(5000);
             http.setReadTimeout(5000);
@@ -160,8 +214,7 @@ public class Password extends Activity {
             UIHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Intent Password_Intent = new Intent(Password.this,Network.class);
-                    Password_Intent.putExtra("ip",url_ip);
+                    Intent Password_Intent = new Intent(Password.this,Main.class);
                     startActivity(Password_Intent);
                     finish();
                 }
@@ -180,7 +233,7 @@ public class Password extends Activity {
         OutputStream os   = null;
         InputStream is   = null;
         try {
-            URL url = new URL(url_ip + "/checkPw");
+            URL url = new URL(url_ip + ":3000/checkPw");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setConnectTimeout(5000);
             http.setReadTimeout(5000);
@@ -218,9 +271,13 @@ public class Password extends Activity {
                 public void run() {
                     if(rcv_msg.equals("0\n")) {
                         text.setText("비밀번호가 틀렸습니다.");
+                        vibe.vibrate(450);
                     } else {
-                        Intent Password_Intent = new Intent(Password.this,Network.class);
-                        Password_Intent.putExtra("ip",url_ip);
+                        Intent Password_Intent = new Intent(Password.this,Main.class);
+                        //비밀번호가 맞으므로 핸드폰의 fcm을 보내준다.
+                        MyFirebaseInstanceIDService fcm = new MyFirebaseInstanceIDService();
+                        fcm.onTokenRefresh();
+
                         startActivity(Password_Intent);
                         finish();
                     }
@@ -237,18 +294,6 @@ public class Password extends Activity {
 
     }
 
-    class SendPost extends AsyncTask<Integer, Integer, String> {
-        protected String doInBackground(Integer... params) {
 
-            if(params[0] == isTherePw)
-                pwExist();
-            if(params[0] == makePw)
-                makingPw();
-            if(params[0] == checkPw)
-                checkingPw();
-            publishProgress();
-            return "done";
-        }
-    }
 }
 

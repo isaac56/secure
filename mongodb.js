@@ -1,61 +1,56 @@
 var app = require('./app');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/data');
+mongoose.connect('mongodb://localhost/password');
 var db = mongoose.connection;
 db.once('open', function callback () {
-	// add your code here when opening
-  	console.log("open");
+   // add your code here when opening
+     console.log("open");
 });
 
 var me = require('./mongodb');
 exports.test = "";
-exports.switch = 0;
-
-
 var md5 = require('md5');
 
 var Schema = mongoose.Schema;
 var deviceSchema = new Schema({
     name: String,
-    device_data: Number,
+    device_date: String,
     device_status: String,
-    device_sort: String,
-    device_date: String
 });
 var Device = mongoose.model('Device',deviceSchema);
 
 var userSchema = new Schema({
-    name: String,
-    password: String
+   name: String,
+   password: String
 });
-var User = mongoose.model('User', userSchema);
-
-//var AduinoList = new Device({name:"1abc",device_data:2});
+//var AduinoList = new Device({namaaae:"1abc",device_data:2});
 
 var AduinoList = new Device();
+mongoose.model('Users',userSchema);
+mongoose.model('Logs',deviceSchema);
+var User = mongoose.model('Users');
+var Log = mongoose.model('Logs');
 
-exports.saveinmongo = function() {
-    AduinoList.save(function(err){
-        if (err) console.log(err);
+exports.savelog = function(name,date ,status) {
+    var log = new Log({
+        name: name,
+   device_date: date,
+        device_status: status
+    });
+
+    log.save(function(err, log) {
+        if(err) return console.error(err);
+        console.dir(log);
     });
 }
 
-exports.updateinmongo = function() {
-    Device.update({name:"1abc"},{$set:{device_data:3}}, function(err){
-    if(err) console.log(err);
-    });
-}
 
-exports.findinmongo = function(){
-    Device.find({name:"1abc"},function (err, Devices) {
-    if (err) return console.error(err);
-    console.log(Devices);
-    });
-}
+
 
 exports.savePw = function(name, pw) {
     var user = new User({
         name: name,
+//   password: pw
         password: md5(pw)
     });
 
@@ -66,15 +61,12 @@ exports.savePw = function(name, pw) {
 }
 
 exports.checkPw = function(pw, callback) {
-    console.log(app.asd);
-    app.asd = app.asd + 1;
     User.find({
+//   password: pw
         password: md5(pw)
     }, function(err, users) {
         if (err) return console.error(err);        
         me.test = String(users.length);
-        console.log("tt");
-        me.switch = 1;
         callback(null, users.length);
     });
 
